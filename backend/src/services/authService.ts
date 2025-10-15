@@ -33,6 +33,6 @@ export const loginUser = async (email: string, password: string) => {
 export const getCurrentUser = async (userId: string) => {
   return prisma.user.findUnique({
     where: { id: userId },
-    select: { id: true, name: true, email: true },
+    select: { id: true, name: true, email: true, isSystemAdmin: true},
   });
 };
