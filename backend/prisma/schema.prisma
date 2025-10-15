@@ -1,15 +1,84 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum RoomRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id         String          @id @default(uuid())
+  name       String
+  email      String          @unique
+  password   String
+  isSystemAdmin Boolean       @default(false) // глобальний системний адмін (опціонально)
+  rooms      RoomUser[]
+  bookingsCreated Booking[]  @relation("BookingsCreated")
+  bookingParticipants UsersBookings[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@map("users")
+}
+
+model Room {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  members     RoomUser[]
+  bookings    Booking[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("rooms")
+}
+
+model RoomUser {
+  id        String    @id @default(uuid())
+  room      Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  role      RoomRole  @default(USER)
+  addedAt   DateTime  @default(now())
+
+  @@unique([roomId, userId])
+  @@map("room_users")
+}
+
+model Booking {
+  id           String          @id @default(uuid())
+  room         Room            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId       String
+  createdBy    User?           @relation("BookingsCreated", fields: [createdById], references: [id], onDelete: SetNull)
+  createdById  String?
+  startTime    DateTime
+  endTime      DateTime
+  title        String?
+  description  String?
+  participants UsersBookings[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([roomId, startTime, endTime])
+  @@map("bookings")
+}
+
+
+model UsersBookings {
+  id        String   @id @default(uuid())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  joinedAt  DateTime @default(now())
+
+  @@unique([bookingId, userId])
+  @@map("users_bookings")
 }
