@@ -35,11 +35,11 @@ export function RoomForm({ onClose, onSuccess }: { onClose: () => void; onSucces
 
         <div className="space-y-4 py-2">
           <div>
-            <Label>Name</Label>
+            <Label className="pb-3">Name</Label>
             <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Room name" />
           </div>
           <div>
-            <Label>Description</Label>
+            <Label className="pb-3">Description</Label>
             <Input value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Short description" />
           </div>
         </div>

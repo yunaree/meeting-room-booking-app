@@ -25,7 +25,7 @@ export default function RoomsPage() {
         setIsAdmin(user.isSystemAdmin === true);
 
       } catch (err: any) {
-        console.error("Failed to fetch rooms:", err);
+        // console.error("Failed to fetch rooms:", err);
         if (err.message?.includes("401") || err.message?.includes("unauthorized")) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");

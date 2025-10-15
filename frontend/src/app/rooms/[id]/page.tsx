@@ -77,16 +77,11 @@ async function handleBooking(e: React.FormEvent) {
     }
   };
 
-
-
-
   useEffect(() => {
     loadUser();
     loadRoom();
     loadBookings();
   }, [id]);
-
-
 
   async function handleAddMember() {
     try {
@@ -95,15 +90,11 @@ async function handleBooking(e: React.FormEvent) {
       loadRoom();
       alert("User added to the room");
     } catch (err: any) {
-      alert(err.message || "Failed to add user");
+      // alert(err.message || "Failed to add user");
     }
   }
 
   if (!room) return <div className="p-8 text-center">Loading...</div>;
-
-  // const isRoomAdmin = room.members?.some(
-  //   (m: any) => m.userId === user?.id && m.role === "ADMIN"
-  // );
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -126,7 +117,7 @@ async function handleBooking(e: React.FormEvent) {
             <form onSubmit={handleBooking} className="space-y-3 mt-2">
                 {error && <p className="flex items-center align-center gap-3"><AlertTriangleIcon/>{error}</p>}
               <div>
-                <Label>Title</Label>
+                <Label className="pb-3">Title</Label>
                 <Input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -134,7 +125,7 @@ async function handleBooking(e: React.FormEvent) {
                 />
               </div>
               <div>
-                <Label>Start Time</Label>
+                <Label className="pb-3">Start Time</Label>
                 <Input
                   type="datetime-local"
                   value={startTime}
@@ -142,7 +133,7 @@ async function handleBooking(e: React.FormEvent) {
                 />
               </div>
               <div>
-                <Label>End Time</Label>
+                <Label className="pb-3">End Time</Label>
                 <Input
                   type="datetime-local"
                   value={endTime}
@@ -150,7 +141,7 @@ async function handleBooking(e: React.FormEvent) {
                 />
               </div>
               <div>
-                <Label>Description</Label>
+                <Label className="pb-3">Description</Label>
                 <Input
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -179,7 +170,7 @@ async function handleBooking(e: React.FormEvent) {
           </CardHeader>
           {showAddMemberForm && (
             <CardContent>
-              <form onSubmit={handleAddMember} className="space-y-3 mt-2">
+              <form onSubmit={handleAddMember} className="space-y-3 mt-2 flex gap-3">
                 <Input
                   type="email"
                   placeholder="Enter user email"
@@ -187,7 +178,7 @@ async function handleBooking(e: React.FormEvent) {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <Button type="submit" className="w-full">Add Member</Button>
+                <Button type="submit" className="w-28">Add Member</Button>
               </form>
             </CardContent>
           )}

@@ -26,7 +26,7 @@ export function RoomMenu({ room, onUpdated }: { room: any; onUpdated: (updated: 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="p-1 rounded hover:bg-gray-100">
-            <MoreVertical className="w-5 h-5 text-gray-600" />
+            <MoreVertical className="w-3 text-gray-600" />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
