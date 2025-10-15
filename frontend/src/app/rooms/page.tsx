@@ -84,7 +84,17 @@ export default function RoomsPage() {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {rooms.map((room) => (
-              <RoomCard key={room.id} room={room} isAdmin={isAdmin} />
+              <RoomCard
+                key={room.id}
+                room={room}
+                isAdmin={isAdmin}
+                onUpdated={(updatedRoom) =>
+                    setRooms((prev) =>
+                    prev.map((r) => (r.id === updatedRoom.id ? updatedRoom : r))
+                    )
+                }
+                />
+
             ))}
           </div>
         )}

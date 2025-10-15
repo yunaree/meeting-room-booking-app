@@ -6,6 +6,7 @@ import prisma from "../prisma/client.js";
 export const createBooking = async (req: AuthRequest, res: Response) => {
   try {
     const { roomId, startTime, endTime, title, description } = req.body;
+    console.log("req.body:", req.body);
     if (!roomId || !startTime || !endTime) {
       return res.status(400).json({ message: "roomId, startTime та endTime потрібні" });
     }

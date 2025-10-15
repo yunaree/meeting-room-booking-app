@@ -65,3 +65,16 @@ export async function deleteRoom(id: string) {
     method: "DELETE",
   });
 }
+
+export async function deleteBooking(id: string) {
+  return apiRequest(`/bookings/${id}`, {
+    method: "DELETE",
+  });
+}
+
+export async function addUserToRoom(roomId: string, email: string, role: string) {
+  return apiRequest(`/rooms/add-user`, {
+    method: "POST",
+    body: JSON.stringify({ roomId, email, role }),
+  });
+}
